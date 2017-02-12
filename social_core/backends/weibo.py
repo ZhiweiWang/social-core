@@ -41,7 +41,7 @@ class WeiboOAuth2(BaseOAuth2):
             'fullname': fullname,
             'first_name': first_name,
             'last_name': last_name,
-            'profile_image_url': response.get('headimgurl', '')
+            'profile_image_url': response.get('profile_image_url', '')
         }
 
     def get_uid(self, access_token):
