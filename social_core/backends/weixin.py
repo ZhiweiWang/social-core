@@ -27,12 +27,22 @@ class WeixinOAuth2(BaseOAuth2):
         """Return user details from Weixin. API URL is:
         https://api.weixin.qq.com/sns/userinfo
         """
-        if self.setting('DOMAIN_AS_USERNAME'):
-            username = response.get('domain', '')
+        if self.setting('USE_UNIONID_AS_USERNAME', False):
+            username = response.get('unionid', '')
+        elif self.setting('USE_OPENID_AS_USERNAME', False):
+            username = response.get('openid', '')
         else:
             username = response.get('nickname', '')
+
+        fullname, first_name, last_name = self.get_user_names(
+            first_name=response.get('nickname', '')
+        )
+
         return {
             'username': username,
+            'fullname': fullname,
+            'first_name': first_name,
+            'last_name': last_name,
             'profile_image_url': response.get('headimgurl', '')
         }
 

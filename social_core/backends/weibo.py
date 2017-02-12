@@ -31,13 +31,18 @@ class WeiboOAuth2(BaseOAuth2):
             username = response.get('domain', '')
         else:
             username = response.get('name', '')
+
         fullname, first_name, last_name = self.get_user_names(
             first_name=response.get('screen_name', '')
         )
-        return {'username': username,
-                'fullname': fullname,
-                'first_name': first_name,
-                'last_name': last_name}
+
+        return {
+            'username': username,
+            'fullname': fullname,
+            'first_name': first_name,
+            'last_name': last_name,
+            'profile_image_url': response.get('headimgurl', '')
+        }
 
     def get_uid(self, access_token):
         """Return uid by access_token"""

@@ -43,7 +43,8 @@ class QQOAuth2(BaseOAuth2):
             'username': username,
             'fullname': fullname,
             'first_name': first_name,
-            'last_name': last_name
+            'last_name': last_name,
+            'profile_image_url': response.get('headimgurl', '')
         }
 
     def get_openid(self, access_token):
