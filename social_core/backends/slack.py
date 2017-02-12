@@ -1,6 +1,6 @@
 """
 Slack OAuth2 backend, docs at:
-    http://psa.matiasaguirre.net/docs/backends/slack.html
+    https://python-social-auth.readthedocs.io/en/latest/backends/slack.html
     https://api.slack.com/docs/oauth
 """
 from .oauth import BaseOAuth2
@@ -21,6 +21,12 @@ class SlackOAuth2(BaseOAuth2):
         ('real_name', 'real_name')
     ]
 
+    def auth_extra_arguments(self):
+        params = super(SlackOAuth2, self).auth_extra_arguments() or {}
+        if self.setting('TEAM'):
+            params['team'] = self.setting('TEAM')
+        return params
+
     def get_user_details(self, response):
         """Return user details from Slack account"""
         # Build the username with the team $username@$team_url
@@ -32,7 +38,8 @@ class SlackOAuth2(BaseOAuth2):
         username = email and email.split('@', 1)[0] or name
         fullname, first_name, last_name = self.get_user_names(name)
 
-        if self.setting('USERNAME_WITH_TEAM', True) and team and 'name' in team:
+        if self.setting('USERNAME_WITH_TEAM', True) and team and \
+           'name' in team:
             name = '{0}@{1}'.format(name, response['team']['name'])
 
         return {
@@ -45,5 +52,8 @@ class SlackOAuth2(BaseOAuth2):
 
     def user_data(self, access_token, *args, **kwargs):
         """Loads user data from service"""
-        return self.get_json('https://slack.com/api/users.identity',
-                             params={'token': access_token})
+        response = self.get_json('https://slack.com/api/users.identity',
+                                 params={'token': access_token})
+        if not response.get('id', None):
+            response['id'] = response['user']['id']
+        return response

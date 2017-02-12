@@ -1,6 +1,6 @@
 """
 Fitbit OAuth backend, docs at:
-    http://psa.matiasaguirre.net/docs/backends/fitbit.html
+    https://python-social-auth.readthedocs.io/en/latest/backends/fitbit.html
 """
 import base64
 
@@ -28,6 +28,7 @@ class FitbitOAuth1(BaseOAuth1):
             'https://api.fitbit.com/1/user/-/profile.json',
             auth=self.oauth_auth(access_token)
         )['user']
+
 
 class FitbitOAuth2(BaseOAuth2):
     """Fitbit OAuth2 authentication backend"""

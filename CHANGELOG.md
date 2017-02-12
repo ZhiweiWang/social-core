@@ -7,10 +7,42 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/python-social-auth/social-core/commits/master)
 
+## [1.2.0](https://github.com/python-social-auth/social-core/releases/tag/1.2.0) - 2017-02-10
+
+### Added
+- Limit Slack by team through `SOCIAL_AUTH_SLACK_TEAM` setting
+
+### Changed
+- Enable defining extra arguments for AzureAD backend.
+- Updated key `expires` to `expires_in` for Facebook OAuth2 backend
+- Updated Slack `id` fetch to default to user `id` if not present in response
+
+## [1.1.0](https://github.com/python-social-auth/social-core/releases/tag/1.1.0) - 2017-01-31
+
+### Added
+- Mediawiki backend
+- Strategy method to let implementation cleanup arguments passed to
+  the authenticate method
+
+### Changed
+- Removed OneLogin SAML IDP dummy settings while generating metadata xml
+- Fixed Asana user details response handling
+- Enforce defusedxml version with support for Python 3.6
+- Updated documentation URL in backends
+
+## [1.0.1](https://github.com/python-social-auth/social-core/releases/tag/1.0.1) - 2017-01-23
+
+### Changed
+- Fixed broken dependencies while building the package
+
+## [1.0.0](https://github.com/python-social-auth/social-core/releases/tag/1.0.0) - 2017-01-22
+
 ### Added
 - Store partial pipeline data in an storage class
 - Store `auth_time` with the last time authentication toke place, use
   `auth_time` to determine if access token expired
+- Ensure that `testkey.pem` is distributed
+- Added Asana OAuth2 backend
 
 ### Changed
 - Removed the old `save_status_to_session` to partialize a pipeline run
@@ -97,6 +129,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.0.1](https://github.com/python-social-auth/social-core/releases/tag/0.0.1) - 2016-11-27
 
-### Chaged
+### Changed
 - Split from the monolitic [python-social-auth](https://github.com/omab/python-social-auth)
   codebase

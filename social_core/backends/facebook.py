@@ -1,6 +1,6 @@
 """
 Facebook OAuth2 and Canvas Application backends, docs at:
-    http://psa.matiasaguirre.net/docs/backends/facebook.html
+    https://python-social-auth.readthedocs.io/en/latest/backends/facebook.html
 """
 import hmac
 import time
@@ -23,8 +23,10 @@ class FacebookOAuth2(BaseOAuth2):
     RESPONSE_TYPE = None
     SCOPE_SEPARATOR = ','
     AUTHORIZATION_URL = 'https://www.facebook.com/v{version}/dialog/oauth'
-    ACCESS_TOKEN_URL = 'https://graph.facebook.com/v{version}/oauth/access_token'
-    REVOKE_TOKEN_URL = 'https://graph.facebook.com/v{version}/{uid}/permissions'
+    ACCESS_TOKEN_URL = \
+        'https://graph.facebook.com/v{version}/oauth/access_token'
+    REVOKE_TOKEN_URL = \
+        'https://graph.facebook.com/v{version}/{uid}/permissions'
     REVOKE_TOKEN_METHOD = 'DELETE'
     USER_DATA_URL = 'https://graph.facebook.com/v{version}/me'
     EXTRA_DATA = [
@@ -137,8 +139,8 @@ class FacebookOAuth2(BaseOAuth2):
                                          'users Facebook data')
 
         data['access_token'] = access_token
-        if 'expires' in response:
-            data['expires'] = response['expires']
+        if 'expires_in' in response:
+            data['expires'] = response['expires_in']
 
         if self.data.get('granted_scopes'):
             data['granted_scopes'] = self.data['granted_scopes'].split(',')
@@ -151,7 +153,7 @@ class FacebookOAuth2(BaseOAuth2):
 
     def revoke_token_url(self, token, uid):
         version = self.setting('API_VERSION', API_VERSION)
-        return self.REVOKE_TOKEN_URL.format(version=version,  uid=uid)
+        return self.REVOKE_TOKEN_URL.format(version=version, uid=uid)
 
     def revoke_token_params(self, token, uid):
         return {'access_token': token}

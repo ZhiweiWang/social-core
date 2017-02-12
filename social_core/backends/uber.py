@@ -1,13 +1,13 @@
 """
 Uber OAuth2 backend, docs at:
-    http://psa.matiasaguirre.net/docs/backends/uber.html
+    https://python-social-auth.readthedocs.io/en/latest/backends/uber.html
 """
 from .oauth import BaseOAuth2
 
 
 class UberOAuth2(BaseOAuth2):
     name = 'uber'
-    ID_KEY='uuid'
+    ID_KEY = 'uuid'
     SCOPE_SEPARATOR = ' '
     AUTHORIZATION_URL = 'https://login.uber.com/oauth/authorize'
     ACCESS_TOKEN_URL = 'https://login.uber.com/oauth/token'

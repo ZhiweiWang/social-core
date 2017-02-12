@@ -1,6 +1,6 @@
 """
 Bitbucket OAuth2 and OAuth1 backends, docs at:
-    http://psa.matiasaguirre.net/docs/backends/bitbucket.html
+    https://python-social-auth.readthedocs.io/en/latest/backends/bitbucket.html
 """
 from ..exceptions import AuthForbidden
 from .oauth import BaseOAuth1, BaseOAuth2
@@ -37,9 +37,12 @@ class BitbucketOAuthBase(object):
             if address['is_primary']:
                 break
 
-        if self.setting('VERIFIED_EMAILS_ONLY', False) and \
-           not address['is_confirmed']:
-            raise AuthForbidden(self, 'Bitbucket account has no verified email')
+            if self.setting('VERIFIED_EMAILS_ONLY', False) and \
+               not address['is_confirmed']:
+                raise AuthForbidden(
+                    self,
+                    'Bitbucket account has no verified email'
+                )
 
         user = self._get_user(access_token)
         if email:
